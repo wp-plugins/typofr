@@ -37,6 +37,6 @@ function typofr($text)
     return $fixed;
 }
 
-//add_filter('the_content', 'typofr');
+add_filter('the_content', 'typofr');
 add_filter('the_title', 'typofr');
 
