@@ -31,11 +31,12 @@ function typofr($text)
         $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
     }
 
+    $decoded = utf8_decode($text);
     $fixed = $fixer->fix($decoded);
     
     return $fixed;
 }
 
-add_filter('the_content', 'typofr');
+//add_filter('the_content', 'typofr');
 add_filter('the_title', 'typofr');
 
