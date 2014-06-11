@@ -12,6 +12,7 @@ A Wordpress plugin for french typography management, powered by the JoliTypo lib
 == Description ==
 
 A Wordpress plugin for french typography management, powered by [JoliTypo](https://github.com/jolicode/JoliTypo).
+
 __Warning__ : your blog can suffer from degraded performances if you do not use a cache-management plugin.
 
 == Installation ==
