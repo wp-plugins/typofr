@@ -70,90 +70,90 @@ echo '<?xml version="1.0" ?'.'>'
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Hyphenation-Tests</title>
-        <link rel="stylesheet" href="style.css" type="text/css" />
-        <meta http-equiv="Content-type" value="text/html; charset=UTF-8"/>
-    </head>
-    <body>
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <fieldset>
-                <legend>Text to hyphenate</legend>
-                <textarea name="text"><?php echo $_REQUEST['text']; ?></textarea>
-            </fieldset>
-            <fieldset>
-                <legend>Hyphenator-Options</legend>
-                <label for="language">Language</label>
-                <select size="1" name="language">
-                    <option <?php echo ('de_DE' === $_REQUEST['language'])?'selected="selected"':'';?>value="de_DE">German</option>
-                    <option <?php echo ('en_GB' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_GB">British English</option>
-                    <option <?php echo ('en_US' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_US">American English</option>
-                    <option <?php echo ('hu_HU' === $_REQUEST['language'])?'selected="selected"':'';?>value="hu_HU">Hungarian</option>
-                </select>
-                <label for="quality">Quality</label>
-                <select size="1" name="quality">
-                    <option <?php echo ('1' === $_REQUEST['quality'])?'selected="selected"':'';?>value="1">Best</option>
-                    <option <?php echo ('3' === $_REQUEST['quality'])?'selected="selected"':'';?>value="3">Better</option>
-                    <option <?php echo ('5' === $_REQUEST['quality'])?'selected="selected"':'';?>value="5">Normal</option>
-                    <option <?php echo ('7' === $_REQUEST['quality'])?'selected="selected"':'';?>value="7">Poorer</option>
-                    <option <?php echo ('9' === $_REQUEST['quality'])?'selected="selected"':'';?>value="9">Poorest</option>
-                </select>
-                <label for="leftMin">Minimum Characters on the left</label>
-                <select size="1" name="leftMin">
-                    <option <?php echo ('2' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="2">2</option>
-                    <option <?php echo ('3' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="3">3</option>
-                    <option <?php echo ('4' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="4">4</option>
-                    <option <?php echo ('5' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="5">5</option>
-                    <option <?php echo ('6' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="6">6</option>
-                    <option <?php echo ('7' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="7">7</option>
-                    <option <?php echo ('8' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="8">8</option>
+<head>
+    <title>Hyphenation-Tests</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <meta http-equiv="Content-type" value="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <fieldset>
+        <legend>Text to hyphenate</legend>
+        <textarea name="text"><?php echo $_REQUEST['text']; ?></textarea>
+    </fieldset>
+    <fieldset>
+        <legend>Hyphenator-Options</legend>
+        <label for="language">Language</label>
+        <select size="1" name="language">
+            <option <?php echo ('de_DE' === $_REQUEST['language'])?'selected="selected"':'';?>value="de_DE">German</option>
+            <option <?php echo ('en_GB' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_GB">British English</option>
+            <option <?php echo ('en_US' === $_REQUEST['language'])?'selected="selected"':'';?>value="en_US">American English</option>
+            <option <?php echo ('hu_HU' === $_REQUEST['language'])?'selected="selected"':'';?>value="hu_HU">Hungarian</option>
+        </select>
+        <label for="quality">Quality</label>
+        <select size="1" name="quality">
+            <option <?php echo ('1' === $_REQUEST['quality'])?'selected="selected"':'';?>value="1">Best</option>
+            <option <?php echo ('3' === $_REQUEST['quality'])?'selected="selected"':'';?>value="3">Better</option>
+            <option <?php echo ('5' === $_REQUEST['quality'])?'selected="selected"':'';?>value="5">Normal</option>
+            <option <?php echo ('7' === $_REQUEST['quality'])?'selected="selected"':'';?>value="7">Poorer</option>
+            <option <?php echo ('9' === $_REQUEST['quality'])?'selected="selected"':'';?>value="9">Poorest</option>
+        </select>
+        <label for="leftMin">Minimum Characters on the left</label>
+        <select size="1" name="leftMin">
+            <option <?php echo ('2' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="2">2</option>
+            <option <?php echo ('3' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="3">3</option>
+            <option <?php echo ('4' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="4">4</option>
+            <option <?php echo ('5' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="5">5</option>
+            <option <?php echo ('6' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="6">6</option>
+            <option <?php echo ('7' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="7">7</option>
+            <option <?php echo ('8' === $_REQUEST['leftMin'])?'selected="selected"':'';?>value="8">8</option>
 
-                </select>
-                <label for="rightMin">Minimum Characters on the right</label>
-                <select size="1" name="rightMin">
-                    <option <?php echo ('2' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="2">2</option>
-                    <option <?php echo ('3' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="3">3</option>
-                    <option <?php echo ('4' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="4">4</option>
-                    <option <?php echo ('5' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="5">5</option>
-                    <option <?php echo ('6' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="6">6</option>
-                    <option <?php echo ('7' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="7">7</option>
-                    <option <?php echo ('8' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="8">8</option>
+        </select>
+        <label for="rightMin">Minimum Characters on the right</label>
+        <select size="1" name="rightMin">
+            <option <?php echo ('2' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="2">2</option>
+            <option <?php echo ('3' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="3">3</option>
+            <option <?php echo ('4' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="4">4</option>
+            <option <?php echo ('5' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="5">5</option>
+            <option <?php echo ('6' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="6">6</option>
+            <option <?php echo ('7' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="7">7</option>
+            <option <?php echo ('8' === $_REQUEST['rightMin'])?'selected="selected"':'';?>value="8">8</option>
 
-                </select>
-                <label for="wordMin">Minimum length of a word</label>
-                <select size="1" name="wordMin">
-                    <option <?php echo ('2' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="2">2</option>
-                    <option <?php echo ('3' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="3">3</option>
-                    <option <?php echo ('4' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="4">4</option>
-                    <option <?php echo ('5' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="5">5</option>
-                    <option <?php echo ('6' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="6">6</option>
-                    <option <?php echo ('7' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="7">7</option>
-                    <option <?php echo ('8' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="8">8</option>
+        </select>
+        <label for="wordMin">Minimum length of a word</label>
+        <select size="1" name="wordMin">
+            <option <?php echo ('2' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="2">2</option>
+            <option <?php echo ('3' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="3">3</option>
+            <option <?php echo ('4' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="4">4</option>
+            <option <?php echo ('5' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="5">5</option>
+            <option <?php echo ('6' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="6">6</option>
+            <option <?php echo ('7' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="7">7</option>
+            <option <?php echo ('8' === $_REQUEST['wordMin'])?'selected="selected"':'';?>value="8">8</option>
 
-                </select>
-                <label for="customHyphen">Custom Hyphen-String</label>
-                <input type="text" name="customHyphen" value="<?php echo $_REQUEST['customHyphen']; ?>" />
-            </fieldset>
-            <fieldset class="buttons">
-                <input type="submit" name="submit" value="Submit" />
-                <input type="reset" name="reset" value="Reset" />
-            </fieldset>
-        </form>
-        <div class="result">
-            <?php
-                $hyphenator = \Org\Heigl\Hyphenator\Hyphenator::factory(null,$_REQUEST['language']);
-                $hyphenator->getOptions()
-                           ->setHyphen($_REQUEST['customHyphen'])
-                           ->setLeftMin ( $_REQUEST ['leftMin'])
-                           ->setRightMin ( $_REQUEST ['rightMin'])
-                           ->setWordMin ( $_REQUEST ['wordMin'])
-                           ->setQuality ( $_REQUEST ['quality']);
-                $hyphenated = $hyphenator->hyphenate($_REQUEST['text']);
-                echo '<span>' . $hyphenated . '</span>';
-            ?>
-        </div>
-        <div class="result">
-        	<?php echo $_REQUEST['text']; ?>
-        </div>
-    </body>
+        </select>
+        <label for="customHyphen">Custom Hyphen-String</label>
+        <input type="text" name="customHyphen" value="<?php echo $_REQUEST['customHyphen']; ?>" />
+    </fieldset>
+    <fieldset class="buttons">
+        <input type="submit" name="submit" value="Submit" />
+        <input type="reset" name="reset" value="Reset" />
+    </fieldset>
+</form>
+<div class="result">
+    <?php
+    $hyphenator = \Org\Heigl\Hyphenator\Hyphenator::factory(null,$_REQUEST['language']);
+    $hyphenator->getOptions()
+        ->setHyphen($_REQUEST['customHyphen'])
+        ->setLeftMin ( $_REQUEST ['leftMin'])
+        ->setRightMin ( $_REQUEST ['rightMin'])
+        ->setWordMin ( $_REQUEST ['wordMin'])
+        ->setQuality ( $_REQUEST ['quality']);
+    $hyphenated = $hyphenator->hyphenate($_REQUEST['text']);
+    echo '<span>' . $hyphenated . '</span>';
+    ?>
+</div>
+<div class="result">
+    <?php echo $_REQUEST['text']; ?>
+</div>
+</body>
 </html>
