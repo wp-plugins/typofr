@@ -202,10 +202,18 @@ class typofr_admin extends typofr
                 'bool0' => __("No, preserve the data for future use.", self::ID),
                 'bool1' => __("Yes, delete the damn data.", self::ID),
             ),
+            'debug_in_console' => array(
+                'section' => 'misc',
+                'label' => __("Debugging", self::ID),
+                'text' => __("Should the plugin log information in the browser console ?", self::ID),
+                'type' => 'bool',
+                'bool0' => __("No.", self::ID),
+                'bool1' => __("Yes, please.", self::ID),
+            ),
             'is_enable_title_fix' => array(
                 'section' => 'contents',
                 'label' => __("Title fixing", self::ID),
-                'text' => __("Should the plugin fix all the posts titles ?", self::ID),
+                'text' => __("Should the plugin fix all the posts' titles ?", self::ID),
                 'type' => 'bool',
                 'bool0' => __("No, preserve the titles as they are.", self::ID),
                 'bool1' => __("Yes, please, fix them for me.", self::ID),
@@ -213,9 +221,17 @@ class typofr_admin extends typofr
             'is_enable_content_fix' => array(
                 'section' => 'contents',
                 'label' => __("Content fixing", self::ID),
-                'text' => __("Should the plugin fix all the posts contents ?", self::ID),
+                'text' => __("Should the plugin fix all the posts' contents ?", self::ID),
                 'type' => 'bool',
                 'bool0' => __("No, preserve the contents as they are.", self::ID),
+                'bool1' => __("Yes, please, fix them for me.", self::ID),
+            ),
+            'is_enable_excerpt_fix' => array(
+                'section' => 'contents',
+                'label' => __("Excerpt fixing", self::ID),
+                'text' => __("Should the plugin fix all the posts' excerpts ?", self::ID),
+                'type' => 'bool',
+                'bool0' => __("No, preserve the excerpts as they are.", self::ID),
                 'bool1' => __("Yes, please, fix them for me.", self::ID),
             ),
             'fix_ellipsis' => array(

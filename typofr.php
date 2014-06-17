@@ -5,7 +5,7 @@
  * Description: a plugin for french typography management, powered by JoliTypo
  *
  * Plugin URI: https://github.com/borisschapira/typofr
- * Version: 0.4
+ * Version: 0.5
  *
  * Author: Boris Schapira
  * Author URI: http://borisschapira.com
@@ -79,8 +79,10 @@ class typofr
      */
     protected $options_default = array(
         'deactivate_deletes_data' => 1,
+        'debug_in_console' => 0,
         'is_enable_title_fix' => 1,
         'is_enable_content_fix' => 1,
+        'is_enable_excerpt_fix' => 1,
         'fix_ellipsis' => 1,
         'fix_dimension' => 1,
         'fix_dash' => 1,
@@ -169,6 +171,9 @@ class typofr
         if ($this->options['is_enable_content_fix']) {
             add_filter('the_content', array(&$this, 'fixTextContent'));
         }
+        if ($this->options['is_enable_excerpt_fix']) {
+            add_filter('the_excerpt', array(&$this, 'fixTextContent'));
+        }
 
         if (is_admin()) {
             $this->load_plugin_textdomain();
@@ -188,60 +193,105 @@ class typofr
      */
     public function fixTextContent($text)
     {
+        // Should the plugin store log in the console ?
+        $doDebug = $this->options['debug_in_console'];
+        $logs = array();
+
+        // What fixes should the plugin apply ?
         static $fixOptions;
-        if(!isset($fixOptions)){
+        if (!isset($fixOptions)) {
             $fixOptions = array();
-            foreach($this->options as $key => $value){
+            foreach ($this->options as $key => $value) {
                 $exp_key = explode('_', $key);
-                if($exp_key[0] == 'fix'){
+                if ($exp_key[0] == 'fix') {
                     $fixOptions[$key] = $value;
                 }
             }
+            array_push($logs, sprintf('Fixers : %s', implode(',', array_keys($fixOptions))));
+            array_push($logs, '------------');
         }
 
+        // Should this function call initialize the fixe ?
         static $enableFixer;
-        if(!isset($enableFixer)){
+        if (!isset($enableFixer)) {
             $enableFixer = count(array_filter($fixOptions));
         }
 
-        if(!$enableFixer){
+        // If no fix is activated, simply returns the original text
+        if (!$enableFixer) {
             return $text;
         }
 
+        // Else, initialize the Jolitypo fixer with the good options
         static $fixer;
         if (!isset($fixer)) {
-
-            $fixers = array();
-            if($fixOptions['fix_ellipsis'])
-                array_push($fixers, 'Ellipsis');
-            if($fixOptions['fix_dimension'])
-                array_push($fixers, 'Dimension');
-            if($fixOptions['fix_dash'])
-                array_push($fixers, 'Dash');
-            if($fixOptions['fix_french_quotes'])
-                array_push($fixers, 'FrenchQuotes');
-            if($fixOptions['fix_french_no_breakspace'])
-                array_push($fixers, 'FrenchNoBreakSpace');
-            if($fixOptions['fix_curly_quote'])
-                array_push($fixers, 'CurlyQuote');
-            if($fixOptions['fix_hyphen'])
-                array_push($fixers, 'Hyphen');
-            if($fixOptions['fix_trademark'])
-                array_push($fixers, 'Trademark');
-
-            $fixer = new Fixer($fixers);
-            $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
+            $fixer = $this->createFixer($fixOptions);
+            //var_dump($fixer->fix('λ'));
         }
 
-        $decoded = utf8_decode($text);
-        $fixed = $fixer->fix($decoded);
+        array_push($logs, sprintf('Original text : %s', $this->hsc_utf8($text)));
+        $fixed = $fixer->fix($text);
+        array_push($logs, sprintf('Fixed text : %s', $this->hsc_utf8($fixed)));
 
-        return $fixed;
+        array_push($logs, '------------');
+
+        $logs = array_map(
+            function ($t) {
+                return trim(preg_replace('/\s+/', ' ', $t));
+            },
+            $logs
+        );
+        $scriptLogs = $doDebug ? "<script>console && console.log('" . implode("\\n", $logs) . "')</script>" : '';
+
+        return $fixed . $scriptLogs;
     }
 
     /*
      * ===== INTERNAL METHODS ====
      */
+
+    /**
+     * Creates the JoliTypo Fixer
+     *
+     * @param $fixOptions
+     *
+     * @return Fixer
+     */
+    protected function createFixer($fixOptions)
+    {
+        $fixers = array();
+        if($fixOptions['fix_ellipsis'])
+            array_push($fixers, 'Ellipsis');
+        if($fixOptions['fix_dimension'])
+            array_push($fixers, 'Dimension');
+        if($fixOptions['fix_dash'])
+            array_push($fixers, 'Dash');
+        if($fixOptions['fix_french_quotes'])
+            array_push($fixers, 'FrenchQuotes');
+        if($fixOptions['fix_french_no_breakspace'])
+            array_push($fixers, 'FrenchNoBreakSpace');
+        if($fixOptions['fix_curly_quote'])
+            array_push($fixers, 'CurlyQuote');
+        if($fixOptions['fix_hyphen'])
+            array_push($fixers, 'Hyphen');
+        if($fixOptions['fix_trademark'])
+            array_push($fixers, 'Trademark');
+
+        //var_dump($fixers);
+        $fixers = [
+            "Ellipsis",
+            "Dimension",
+            "Dash",
+            "FrenchQuotes",
+            "FrenchNoBreakSpace",
+            "CurlyQuote",
+            "Hyphen",
+            "Trademark"];
+        $fixer = new Fixer($fixers);
+        $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
+
+        return $fixer;
+    }
 
     /**
      * Sanitizes output via htmlspecialchars() using UTF-8 encoding
