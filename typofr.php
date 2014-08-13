@@ -5,7 +5,7 @@
  * Description: a plugin for french typography management, powered by JoliTypo
  *
  * Plugin URI: https://github.com/borisschapira/typofr
- * Version: 0.5
+ * Version: 0.6
  *
  * Author: Boris Schapira
  * Author URI: http://borisschapira.com
@@ -277,16 +277,6 @@ class typofr
         if($fixOptions['fix_trademark'])
             array_push($fixers, 'Trademark');
 
-        //var_dump($fixers);
-        $fixers = [
-            "Ellipsis",
-            "Dimension",
-            "Dash",
-            "FrenchQuotes",
-            "FrenchNoBreakSpace",
-            "CurlyQuote",
-            "Hyphen",
-            "Trademark"];
         $fixer = new Fixer($fixers);
         $fixer->setLocale('fr_FR'); // Needed by the Hyphen Fixer
 

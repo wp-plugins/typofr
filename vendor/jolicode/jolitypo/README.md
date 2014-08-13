@@ -38,7 +38,7 @@ It's designed to be:
 Quick usage
 ===========
 
-Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your **HTML contents** and then, call `fix()`:
+Just tell the Fixer class [which Fixer](#available-fixers) you want to run on your HTML content and then, call `fix()`:
 
 ```php
 use JoliTypo\Fixer;
@@ -50,25 +50,16 @@ $fixed_content = $fixer->fix('<p>Je suis "très content" de t\'avoir invité sur
 For your ease of use, you can find [ready to use list of Fixer for your language here](#fixer-recommendations-by-locale).
 Micro-typography is nothing like a standard or a law, what really matter is consistency, so feel free to use your own lists.
 
-Also, be advise that JoliTypo is intended to be used on HTML contents (not pages) and will remove potential `<head>`, `<html>` and `<body>` tags.
-
 Installation
 ============
 
-Requirements are handled by Composer (libxml and mbstring are required).
-
 ```
-composer require jolicode/jolitypo 0.1.*
+composer require jolicode/jolitypo dev-master
 ```
 
 *Usage outside composer is also possible, just add the `src/` directory to any PSR-0 compatible autoloader.*
 
-Integration
-===========
-
-- (Official) [Symfony2 Bundle and twig extension](https://github.com/jolicode/JoliTypoBundle)
-- [Wordpress plugin](http://wordpress.org/plugins/typofr/)
-- [Drupal module](https://github.com/Anaethelion/JoliTypo-for-Drupal)
+We also provide a [Symfony2 Bundle with a Twig extension](https://github.com/jolicode/JoliTypoBundle).
 
 Available Fixers
 ================
@@ -278,7 +269,6 @@ are not tested, some are bundled inside a CMS or a Library, some are not using p
 - https://github.com/scoates/lexentity
 - https://github.com/nofont/Typesetter.js
 - https://github.com/judbd/php-typography (fork of php-typography, you can test it here: http://www.roxane-company.com/typonerd/)
-- http://mdash.ru/
 
 Glossary & References
 =====================

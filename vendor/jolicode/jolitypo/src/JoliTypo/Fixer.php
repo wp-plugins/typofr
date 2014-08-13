@@ -62,15 +62,10 @@ class Fixer
      */
     public function fix($content)
     {
-        $trimmed = trim($content);
-        if (empty($trimmed)) {
-            return $content;
-        }
-
         // Get a clean new StateBag
         $this->state_bag = new StateBag();
 
-        $dom = $this->loadDOMDocument($trimmed);
+        $dom = $this->loadDOMDocument($content);
 
         $this->processDOM($dom, $dom);
 
@@ -206,57 +201,30 @@ class Fixer
         $dom->substituteEntities    = false;
         $dom->formatOutput          = false;
 
-        // Change mb and libxml config
         $libxml_current = libxml_use_internal_errors(true);
-        $mb_detect_current = mb_detect_order();
-        mb_detect_order("ASCII,UTF-8,ISO-8859-1,windows-1252,iso-8859-15");
 
-        $loaded = $dom->loadHTML($this->fixContentEncoding($content));
+        // Little hack to force UTF-8
+        if (strpos($content, '<?xml encoding') === false) {
+            $hack = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
+            $loaded = $dom->loadHTML($hack . $content);
+        } else {
+            $loaded = $dom->loadHTML($content);
+        }
 
-        // Restore mb and libxml config
         libxml_use_internal_errors($libxml_current);
-        mb_detect_order(implode(',', $mb_detect_current));
 
         if (!$loaded) {
             throw new InvalidMarkupException("Can't load the given HTML via DomDocument");
         }
 
-        return $dom;
-    }
-
-    /**
-     * Convert the content encoding properly and add Content-Type meta if HTML document
-     *
-     * @see http://php.net/manual/en/domdocument.loadhtml.php#91513
-     * @see https://github.com/jolicode/JoliTypo/issues/7
-     *
-     * @param   $content
-     * @return  string
-     */
-    private function fixContentEncoding($content)
-    {
-        if (!empty($content)) {
-            // Little hack to force UTF-8
-            if (strpos($content, '<?xml encoding') === false) {
-                $hack    = strpos($content, '<body') === false ? '<?xml encoding="UTF-8"><body>' : '<?xml encoding="UTF-8">';
-                $content = $hack . $content;
-            }
-
-            $encoding = mb_detect_encoding($content);
-            $headpos  = mb_strpos($content, '<head>');
-
-            // Add a meta to the <head> section
-            if (false !== $headpos) {
-                $headpos +=6;
-                $content = mb_substr($content, 0, $headpos) .
-                        '<meta http-equiv="Content-Type" content="text/html; charset='.$encoding.'">' .
-                        mb_substr($content, $headpos);
-            }
-
-            $content = mb_convert_encoding($content, 'HTML-ENTITIES', $encoding);
+        foreach ($dom->childNodes as $item) {
+          if ($item->nodeType === XML_PI_NODE) {
+            $dom->removeChild($item); // remove encoding hack
+            break;
+          }
         }
 
-        return $content;
+        return $dom;
     }
 
     /**
@@ -267,9 +235,9 @@ class Fixer
     {
         // Remove added body & doctype
         $content = preg_replace(array(
-                "/^\<\!DOCTYPE.*?<html>.*?<body>/si",
-                "!</body></html>$!si"
-            ), "", $dom->saveHTML());
+                "/^\<\!DOCTYPE.*?<html><body>/si",
+                "!</body></html>$!si"),
+                "", $dom->saveHTML());
 
         return trim($content);
     }

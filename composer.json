@@ -7,6 +7,13 @@
         }
     ],
     "require": {
-        "jolicode/jolitypo": "dev-contentEncoding"
-    }
+        "org_heigl/hyphenator": "dev-master",
+        "jolicode/jolitypo": "0.1.*@dev"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jolicode/JoliTypo.git"
+        }
+    ]
 }
