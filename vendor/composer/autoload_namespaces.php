@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Org\\Heigl\\Hyphenator' => array($vendorDir . '/org_heigl/hyphenator/src'),
+    'Org\\Heigl\\Hyphenator' => array($vendorDir . '/Org_Heigl/Hyphenator/src'),
     'JoliTypo' => array($vendorDir . '/jolicode/jolitypo/src'),
 );
