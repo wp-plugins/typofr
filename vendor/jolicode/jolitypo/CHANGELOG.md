@@ -3,6 +3,11 @@ CHANGELOG
 
 ### ??? ###
 
+### 0.2.0 (2015-07-13) ###
+
+* new NoSpaceBeforeComma fixer, cleaning badly placed spaces close to commas
+* add NoBreakSpace inside french quotes automatically
+
 ### 0.1.4 (2014-06-17) ###
 
 * add HHVM tests on travis
